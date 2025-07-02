@@ -1,114 +1,35 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
+import Image from 'next/image';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { useVideoSlider } from '../hooks/useVideoSlider';
+import { Video } from '../types';
 
 const MembersSection = () => {
-  const [scrollY, setScrollY] = useState(0);
-  const [targetScrollY, setTargetScrollY] = useState(0);
-  const [showGradient, setShowGradient] = useState(false);
-  const [showMenu, setShowMenu] = useState(false);
-  const [showText, setShowText] = useState(false);
-  const sliderRef = useRef<HTMLDivElement>(null);
-  const [activeVideo, setActiveVideo] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const videoRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [showRedGradient, setShowRedGradient] = useState(false);
-  const [showWorks, setShowWorks] = useState(false);
-  const [showWorksTitle, setShowWorksTitle] = useState(false);
-  const [showWorksContent, setShowWorksContent] = useState(false);
-  const [showContact, setShowContact] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   
+  const {
+    scrollY,
+    showGradient,
+    showMenu,
+    showText,
+    showRedGradient,
+    showWorksTitle,
+    showWorksContent,
+    showContact,
+    scrollToSection,
+  } = useScrollAnimation();
+  
+  // フォーム送信された状態のリセット
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setTargetScrollY(currentScrollY);
-      
-      // WORKSセクションが表示されるタイミングを調整
-      if (currentScrollY > 800 && !showWorks) {
-        setShowWorks(true);
-        
-        // WORKSタイトルを表示
-        setTimeout(() => {
-          setShowWorksTitle(true);
-          
-          // タイトル表示から1.2秒後にコンテンツを表示
-          setTimeout(() => {
-            setShowWorksContent(true);
-          }, 1200);
-        }, 300);
-      }
-      
-      // CONTACTセクションの表示タイミングを調整
-      if (currentScrollY > 1500 && !showContact) {
-        setTimeout(() => {
-          setShowContact(true);
-        }, 300);
-      } else if (currentScrollY <= 1500 && showContact) {
-        setShowContact(false);
-        // フォームが送信された状態をリセット
-        setFormSubmitted(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    // 最初はスクロールを無効にする
-    document.body.style.overflow = 'hidden';
-    
-    const gradientTimer = setTimeout(() => {
-      setShowGradient(true);
-      setShowMenu(true);
-      
-      setTimeout(() => {
-        setShowText(true);
-        
-        // テキストが表示された後にスクロールを有効にする
-        setTimeout(() => {
-          document.body.style.overflow = 'auto';
-          document.documentElement.style.overflow = 'auto';
-        }, 500);
-      }, 1000);
-    }, 3000);
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      clearTimeout(gradientTimer);
-      document.body.style.overflow = 'auto';
-      document.documentElement.style.overflow = 'auto';
-    };
-  }, [showWorks, showRedGradient, showContact]);
-
-  // スムーズスクロールのアニメーション
-  useEffect(() => {
-    let animationFrameId: number;
-    
-    const animateScroll = () => {
-      setScrollY(prev => {
-        // イージング係数 (0.05〜0.15の間が適切、小さいほど慣性が大きい)
-        const easing = 0.08;
-        const newScrollY = prev + (targetScrollY - prev) * easing;
-        
-        // 十分に近づいたら更新を停止
-        if (Math.abs(targetScrollY - newScrollY) < 0.1) {
-          return targetScrollY;
-        }
-        
-        return newScrollY;
-      });
-      
-      animationFrameId = requestAnimationFrame(animateScroll);
-    };
-    
-    animationFrameId = requestAnimationFrame(animateScroll);
-    
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, [targetScrollY]);
+    if (!showContact) {
+      setFormSubmitted(false);
+    }
+  }, [showContact]);
 
   // スライドショーのデータ
-  const videos = [
+  const videos = useMemo<Video[]>(() => [
     {
       id: 'iuhFpC_Hd7s',
       title: '映像作品1',
@@ -139,53 +60,21 @@ const MembersSection = () => {
       url: 'https://youtu.be/27wp7YMh3og?si=Vz8xZNZyfJ1eF6LP',
       description: '日常の一瞬を切り取った詩的な映像集。何気ない瞬間に宿る美しさを再発見させてくれます。'
     }
-  ];
+  ], []);
 
-  // 自動切り替え
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!isAnimating) {
-        setIsAnimating(true);
-        setActiveVideo(prev => (prev + 1) % videos.length);
-        setTimeout(() => setIsAnimating(false), 500);
-      }
-    }, 5000);
-    
-    return () => clearInterval(interval);
-  }, [isAnimating, videos.length]);
+  const { activeVideo, isAnimating, changeVideo } = useVideoSlider(videos);
 
-  // スクロール関数
-  const scrollToSection = (sectionId: string) => {
-    const targetPosition = sectionId === 'works' 
-      ? 900  // WORKSセクションの位置
-      : sectionId === 'contact' 
-        ? 1600  // CONTACTセクションの位置
-        : 0;    // HOMEの位置
-    
-    window.scrollTo({
-      top: targetPosition,
-      behavior: 'smooth'
-    });
-  };
-
-  // CONTACTセクション内のフォーム送信ハンドラを追加
-  const handleSubmit = (e: React.FormEvent) => {
+  // CONTACTセクション内のフォーム送信ハンドラ
+  const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     
-    // フォームのフェードアウトアニメーション
     const form = e.currentTarget as HTMLFormElement;
     form.classList.add('fade-out-form');
     
-    // アニメーション完了後にフォーム送信状態を更新
     setTimeout(() => {
       setFormSubmitted(true);
     }, 500);
-    
-    // 5秒後にメッセージを非表示にする（オプション）
-    // setTimeout(() => {
-    //   setFormSubmitted(false);
-    // }, 5000);
-  };
+  }, []);
 
   return (
     <>
@@ -243,15 +132,14 @@ const MembersSection = () => {
                       transformOrigin: 'left center'
                     }}
                   >
-                    <div 
-                      ref={sliderRef}
-                      className="relative overflow-hidden rounded-lg shadow-2xl"
-                    >
+                    <div className="relative overflow-hidden rounded-lg shadow-2xl">
                       <div className="relative aspect-video bg-black">
-                        <img
+                        <Image
                           src={`https://img.youtube.com/vi/${videos[activeVideo].id}/maxresdefault.jpg`}
                           alt={videos[activeVideo].title}
                           className="absolute inset-0 w-full h-full object-cover"
+                          fill
+                          sizes="600px"
                         />
                       </div>
                     </div>
@@ -260,11 +148,7 @@ const MembersSection = () => {
                       {videos.map((_, index) => (
                         <button
                           key={index}
-                          onClick={() => {
-                            setIsAnimating(true);
-                            setActiveVideo(index);
-                            setTimeout(() => setIsAnimating(false), 500);
-                          }}
+                          onClick={() => changeVideo(index)}
                           className={`w-2 h-2 rounded-full transition-all duration-300 ${
                             activeVideo === index ? 'bg-white scale-125' : 'bg-white/40'
                           }`}
@@ -480,7 +364,7 @@ const MembersSection = () => {
           >
             <div className="container mx-auto py-6 px-8 flex flex-col md:flex-row justify-between items-center">
               <div className="flex items-center mb-4 md:mb-0">
-                <img src="/logo-only.png" alt="ロゴ" className="h-10 mr-4" />
+                <Image src="/logo-only.png" alt="ロゴ" width={40} height={40} className="mr-4" />
                 <div className="text-white text-sm">
                   <p className="font-light">© 2025 fromB</p>
                   <p className="text-xs opacity-70">All Rights Reserved.</p>
