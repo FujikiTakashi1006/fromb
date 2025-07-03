@@ -1,9 +1,5 @@
-import MembersSection from "@/app/components/MembersSection";
+import HomeSection from './components/HomeSection';
 
 export default function Home() {
-  return (
-    <div>
-      <MembersSection />
-    </div>
-  );
+  return <HomeSection />;
 }
