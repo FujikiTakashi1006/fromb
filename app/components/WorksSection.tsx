@@ -85,19 +85,19 @@ export default function WorksSection() {
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
           <div className="relative">
-            <div className="flex items-center gap-16 justify-center">
+            <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 justify-center">
               {/* Title Section */}
-              <div className="flex-shrink-0">
-                <h2 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <div className="flex-shrink-0 text-center lg:text-left">
+                <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   Portfolio
                 </h2>
-                <p className="text-white/80 text-lg mt-4 max-w-xs">
+                <p className="text-white/80 text-base sm:text-lg mt-4 max-w-xs mx-auto lg:mx-0">
                   私たちが手がけた様々なジャンルの映像作品
                 </p>
                 <div className="mt-6">
                   <button 
                     onClick={() => setShowNotice(!showNotice)}
-                    className="text-white/60 text-sm hover:text-white/80 transition-colors duration-300 flex items-center gap-2"
+                    className="text-white/60 text-sm hover:text-white/80 transition-colors duration-300 flex items-center gap-2 mx-auto lg:mx-0"
                   >
                     ※ 関係者各位 
                     <span className={`transition-transform duration-300 ${showNotice ? 'rotate-90' : ''}`}>
@@ -107,7 +107,7 @@ export default function WorksSection() {
                   <div className={`overflow-hidden transition-all duration-300 ${
                     showNotice ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'
                   }`}>
-                    <p className="text-white/60 text-sm mt-2 max-w-xs">
+                    <p className="text-white/60 text-sm mt-2 max-w-xs mx-auto lg:mx-0">
                       当Webサイトに掲載されている作品について、水﨑一輝の作例紹介を目的としております。<br />
                       ご不都合があればメールにてご連絡いただきますと幸いです。
                     </p>
@@ -116,8 +116,8 @@ export default function WorksSection() {
               </div>
               
               {/* Slideshow Section */}
-              <div className="relative w-[420px]">
-              <div className="relative h-[420px] overflow-hidden perspective-1000">
+              <div className="relative w-full max-w-sm sm:max-w-md lg:w-[420px]">
+              <div className="relative h-80 sm:h-96 lg:h-[420px] overflow-hidden perspective-1000">
                 {works.map((work, index) => (
                   <div
                     key={`slide-${index}`}
@@ -137,7 +137,7 @@ export default function WorksSection() {
                          onClick={() => window.open(work.url, '_blank')}>
                       {/* Image with padding */}
                       <div className="p-4">
-                        <div className="relative h-52 rounded-2xl overflow-hidden">
+                        <div className="relative h-40 sm:h-44 lg:h-52 rounded-2xl overflow-hidden">
                           <Image
                             src={`https://img.youtube.com/vi/${work.id}/maxresdefault.jpg`}
                             alt={work.title}

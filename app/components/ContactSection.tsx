@@ -71,7 +71,7 @@ export default function ContactSection() {
             Contact
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            映像制作に関するご相談、お見積り、その他ご質問など、
+            映像制作に関するご相談、お見積り、その他ご質問など<br />
             お気軽にお問い合わせください。
           </p>
         </div>
@@ -148,7 +148,7 @@ export default function ContactSection() {
                       required
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-gray-900"
                       placeholder="山田太郎"
                     />
                   </div>
@@ -163,7 +163,7 @@ export default function ContactSection() {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-gray-900"
                       placeholder="example@email.com"
                     />
                   </div>
