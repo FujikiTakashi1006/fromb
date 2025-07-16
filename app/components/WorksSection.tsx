@@ -52,11 +52,27 @@ export default function WorksSection() {
   ], []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 300);
-    
-    return () => clearTimeout(timer);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const element = document.getElementById('works');
+    if (element) {
+      observer.observe(element);
+    }
+
+    return () => {
+      if (element) {
+        observer.unobserve(element);
+      }
+    };
   }, []);
 
   // Auto slide for slideshow every 4 seconds
@@ -80,7 +96,9 @@ export default function WorksSection() {
             <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 justify-center">
               {/* Title Section */}
               <div className="flex-shrink-0 text-center lg:text-left">
-                <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <h2 className={`text-4xl sm:text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent transition-all duration-1000 ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}>
                   Portfolio
                 </h2>
                 <p className="text-white/80 text-base sm:text-lg mt-2 max-w-xs mx-auto lg:mx-0">
