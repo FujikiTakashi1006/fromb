@@ -66,14 +66,14 @@ export default function WorksSection() {
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [works.length]);
+  }, [works.length, currentSlide]);
 
 
   return (
-    <div className="bg-gradient-to-br from-purple-300 via-blue-300 to-indigo-400 py-16 border-b-0 min-h-screen flex flex-col">
+    <div className="bg-gradient-to-br from-purple-300 via-blue-300 to-indigo-400 py-8 border-b-0 min-h-screen flex flex-col">
       <div className="max-w-7xl mx-auto px-6 flex-1 flex flex-col justify-center">
         {/* Main Slideshow */}
-        <div className={`mb-16 transition-all duration-1000 delay-300 ${
+        <div className={`mb-8 transition-all duration-1000 delay-300 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
           <div className="relative">
@@ -83,10 +83,10 @@ export default function WorksSection() {
                 <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   Portfolio
                 </h2>
-                <p className="text-white/80 text-base sm:text-lg mt-4 max-w-xs mx-auto lg:mx-0">
+                <p className="text-white/80 text-base sm:text-lg mt-2 max-w-xs mx-auto lg:mx-0">
                   私たちが手がけた様々なジャンルの映像作品
                 </p>
-                <div className="mt-6 relative">
+                <div className="mt-3 relative">
                   <button 
                     onClick={() => setShowNotice(!showNotice)}
                     className="text-white/60 text-sm hover:text-white/80 transition-colors duration-300 flex items-center gap-2 mx-auto lg:mx-0"
@@ -109,7 +109,7 @@ export default function WorksSection() {
               
               {/* Slideshow Section */}
               <div className="relative w-full max-w-sm sm:max-w-md lg:w-[420px]">
-              <div className="relative h-80 sm:h-96 lg:h-[420px] overflow-hidden perspective-1000">
+              <div className="relative h-72 sm:h-80 lg:h-[350px] overflow-hidden perspective-1000">
                 {works.map((work, index) => (
                   <div
                     key={`slide-${index}`}
@@ -129,7 +129,7 @@ export default function WorksSection() {
                          onClick={() => window.open(work.url, '_blank')}>
                       {/* Image with padding */}
                       <div className="p-4">
-                        <div className="relative h-40 sm:h-44 lg:h-52 rounded-2xl overflow-hidden">
+                        <div className="relative h-40 sm:h-44 lg:h-48 rounded-2xl overflow-hidden">
                           <Image
                             src={`https://img.youtube.com/vi/${work.id}/maxresdefault.jpg`}
                             alt={work.title}
@@ -149,8 +149,8 @@ export default function WorksSection() {
                       </div>
 
                       {/* Content */}
-                      <div className="p-6">
-                        <div className="flex items-center justify-between mb-4">
+                      <div className="p-4">
+                        <div className="flex items-center justify-between mb-2">
                           <span className="inline-block px-3 py-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-600 text-xs font-medium rounded-full">
                             {work.category}
                           </span>
@@ -166,20 +166,6 @@ export default function WorksSection() {
                 ))}
               </div>
 
-              {/* Slide Indicators */}
-              <div className="flex justify-center space-x-3 mt-8">
-                {works.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentSlide(index)}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      index === currentSlide 
-                        ? 'bg-white scale-125' 
-                        : 'bg-white/50 hover:bg-white/70'
-                    }`}
-                  />
-                ))}
-              </div>
             </div>
             </div>
           </div>
@@ -190,7 +176,7 @@ export default function WorksSection() {
       <div className={`transition-all duration-1000 delay-500 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`}>
-        <div className="overflow-hidden py-8">
+        <div className="overflow-hidden py-4">
           <div 
             className="flex space-x-6 transition-transform duration-1000 ease-in-out"
             style={{ 
@@ -202,7 +188,7 @@ export default function WorksSection() {
               <div
                 key={`card-${index}`}
                 className="flex-shrink-0 w-64 group cursor-pointer"
-                onClick={() => window.open(work.url, '_blank')}
+                onClick={() => setCurrentSlide(index % works.length)}
               >
                 <div className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
                      style={{
@@ -219,14 +205,8 @@ export default function WorksSection() {
                         className="object-cover group-hover:scale-110 transition-transform duration-700"
                       />
                       
-                      {/* Hover Play Button */}
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                        <div className="w-14 h-14 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100">
-                          <svg className="w-6 h-6 text-gray-800 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M8 5v14l11-7z"/>
-                          </svg>
-                        </div>
-                      </div>
+                      {/* Hover Overlay */}
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300"></div>
                     </div>
                   </div>
 

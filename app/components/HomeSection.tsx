@@ -4,14 +4,34 @@ import { useEffect, useState } from 'react';
 
 export default function HomeSection() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoaded(true);
+      // メッセージ表示の1秒後にスクロールインジケーターを表示
+      setTimeout(() => {
+        setShowScrollIndicator(true);
+      }, 1000);
     }, 4000); // 4秒後に表示
     
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!isLoaded) {
+      // スクロールを無効にする
+      document.body.style.overflow = 'hidden';
+    } else {
+      // スクロールを有効にする
+      document.body.style.overflow = 'auto';
+    }
+
+    // クリーンアップ
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isLoaded]);
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -48,20 +68,19 @@ export default function HomeSection() {
           <p className="text-xl md:text-2xl text-white/90 font-light tracking-wide mb-12 max-w-3xl mx-auto">
             言葉以上のメッセージを
           </p>
-          
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <button 
-              onClick={() => document.getElementById('works')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-medium hover:shadow-xl hover:scale-105 transition-all duration-300"
-            >
-              作品を見る
-            </button>
-            <button 
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-8 py-4 border-2 border-white/50 text-white rounded-full font-medium hover:border-white hover:bg-white/10 transition-all duration-300"
-            >
-              お問い合わせ
-            </button>
+        </div>
+      </div>
+      
+      {/* Scroll Indicator */}
+      <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 transition-all duration-1000 ${
+        showScrollIndicator ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+      }`}>
+        <div className="flex flex-col items-center space-y-2">
+          <div className="text-white/60 text-sm font-light tracking-widest animate-pulse">
+            SCROLL
+          </div>
+          <div className="w-px h-12 bg-white/40 relative">
+            <div className="absolute top-0 left-1/2 w-0.5 h-2 bg-white/80 transform -translate-x-1/2 animate-slide-down"></div>
           </div>
         </div>
       </div>
