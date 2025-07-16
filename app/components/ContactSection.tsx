@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export default function ContactSection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -102,7 +102,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900">メール</h4>
-                    <p className="text-gray-600">info@fromb.jp</p>
+                    <p className="text-gray-600">mktr087@gmail.com</p>
                   </div>
                 </div>
 
@@ -195,7 +195,7 @@ export default function ContactSection() {
                     rows={6}
                     value={formData.message}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-gray-900"
                     placeholder="プロジェクトの詳細、ご要望、予算、スケジュールなどをお聞かせください"
                   />
                 </div>

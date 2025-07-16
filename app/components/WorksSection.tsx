@@ -11,51 +11,43 @@ export default function WorksSection() {
   const works = useMemo(() => [
     {
       id: 'iuhFpC_Hd7s',
-      title: 'Brand Commercial',
-      category: 'Commercial',
-      description: '独自の視点で捉えた日常の美しさを表現した作品。光と影の対比が印象的な映像詩です。',
+      title: 'noh/Reverberation',
+      category: 'Music Video',
+      description: 'Music Video',
       url: 'https://youtu.be/iuhFpC_Hd7s?si=pj7zrabZcEEM-O8d',
       year: '2024'
     },
     {
       id: 'OHKQ9qmgzMM',
-      title: 'Urban Symphony',
-      category: 'Artistic',
-      description: '都市の喧騒と静寂を対比させた実験的映像作品。現代社会の矛盾を鋭く切り取ります。',
+      title: '空白の夜/純',
+      category: 'Music Video',
+      description: 'Music Video',
       url: 'https://youtu.be/OHKQ9qmgzMM?si=DdxEWvl-cCOE68nD',
       year: '2024'
     },
     {
       id: 'BKRR6jc1RGE',
-      title: 'Nature Documentary',
-      category: 'Documentary',
-      description: '自然と人間の共生をテーマにした叙情的な映像。心に響く音楽とともに贈る感動作。',
+      title: 'THE ENCORE/四度目の桜',
+      category: 'Music Video',
+      description: 'Music Video',
       url: 'https://youtu.be/BKRR6jc1RGE?si=MudoWNZ5wS55AFrx',
       year: '2023'
     },
     {
       id: 'd1_zrKLEhwQ',
-      title: 'Experimental Film',
-      category: 'Experimental',
-      description: '革新的な撮影技法を駆使した前衛的作品。見る者の想像力を刺激する映像体験。',
+      title: '駄洒落/夏の景',
+      category: 'Music Video',
+      description: 'Music Video',
       url: 'https://youtu.be/d1_zrKLEhwQ?si=4NPy7s_3doPvRRow',
       year: '2023'
     },
     {
       id: '27wp7YMh3og',
-      title: 'Lifestyle Video',
-      category: 'Lifestyle',
-      description: '日常の一瞬を切り取った詩的な映像集。何気ない瞬間に宿る美しさを再発見させてくれます。',
+      title: '裏水/天使の疑問符',
+      category: 'Music Video',
+      description: 'Music Video',
       url: 'https://youtu.be/27wp7YMh3og?si=Vz8xZNZyfJ1eF6LP',
       year: '2023'
-    },
-    {
-      id: 'iuhFpC_Hd7s',
-      title: 'Corporate Video',
-      category: 'Corporate',
-      description: '企業の理念と価値観を映像で表現した感動的なブランドストーリー。',
-      url: 'https://youtu.be/iuhFpC_Hd7s?si=pj7zrabZcEEM-O8d',
-      year: '2024'
     }
   ], []);
 
@@ -104,7 +96,7 @@ export default function WorksSection() {
                       ▶
                     </span>
                   </button>
-                  <div className={`overflow-hidden transition-all duration-300 ${
+                  <div className={`overflow-hidden transition-all duration-300 absolute z-10 ${
                     showNotice ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'
                   }`}>
                     <p className="text-white/60 text-sm mt-2 max-w-xs mx-auto lg:mx-0">
@@ -158,20 +150,16 @@ export default function WorksSection() {
 
                       {/* Content */}
                       <div className="p-6">
-                        <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center justify-between mb-4">
                           <span className="inline-block px-3 py-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-600 text-xs font-medium rounded-full">
                             {work.category}
                           </span>
                           <span className="text-xs text-gray-500">{work.year}</span>
                         </div>
                         
-                        <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
+                        <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
                           {work.title}
                         </h3>
-                        
-                        <p className="text-gray-600 text-sm leading-relaxed line-clamp-2">
-                          {work.description}
-                        </p>
                       </div>
                     </div>
                   </div>
@@ -254,9 +242,6 @@ export default function WorksSection() {
                       {work.title}
                     </h3>
                     
-                    <p className="text-gray-600 text-sm leading-relaxed line-clamp-2">
-                      {work.description}
-                    </p>
                   </div>
                 </div>
               </div>

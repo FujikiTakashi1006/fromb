@@ -16,7 +16,12 @@ export default function Navigation() {
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+      const navHeight = 80; // ナビゲーションの高さ
+      const sectionTop = section.offsetTop - navHeight;
+      window.scrollTo({
+        top: sectionTop,
+        behavior: 'smooth'
+      });
     }
   };
 
@@ -59,7 +64,10 @@ export default function Navigation() {
       <div className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <div className="flex items-center space-x-1">
+          <button 
+            onClick={() => scrollToSection('home')}
+            className="flex items-center space-x-1"
+          >
             <div className="relative w-12 h-12">
               <Image
                 src="/logo-only.png"
@@ -74,7 +82,7 @@ export default function Navigation() {
             }`}>
               fromB
             </span>
-          </div>
+          </button>
           
           {/* Navigation Items */}
           <div className="hidden md:flex space-x-8">
