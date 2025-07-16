@@ -198,14 +198,14 @@ export default function WorksSection() {
           <div 
             className="flex space-x-6 transition-transform duration-1000 ease-in-out"
             style={{ 
-              transform: `translateX(-${currentSlide * 280}px)`,
-              width: `${works.length * 3 * 280}px`
+              transform: `translateX(-${currentSlide * 220}px)`,
+              width: `${works.length * 3 * 220}px`
             }}
           >
             {[...works, ...works, ...works].map((work, index) => (
               <div
                 key={`card-${index}`}
-                className="flex-shrink-0 w-64 group cursor-pointer"
+                className="flex-shrink-0 w-48 sm:w-64 group cursor-pointer"
                 onClick={() => setCurrentSlide(index % works.length)}
               >
                 <div className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
@@ -215,7 +215,7 @@ export default function WorksSection() {
                      }}>
                   {/* Image with padding */}
                   <div className="p-4">
-                    <div className="relative h-40 rounded-2xl overflow-hidden">
+                    <div className="relative h-32 sm:h-40 rounded-2xl overflow-hidden">
                       <Image
                         src={`https://img.youtube.com/vi/${work.id}/maxresdefault.jpg`}
                         alt={work.title}
@@ -228,7 +228,7 @@ export default function WorksSection() {
                     </div>
                   </div>
 
-                  <div className="p-6">
+                  <div className="p-4 sm:p-6">
                     <div className="flex items-center justify-between mb-3">
                       <span className="inline-block px-3 py-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-600 text-xs font-medium rounded-full">
                         {work.category}
