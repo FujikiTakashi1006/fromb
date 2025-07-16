@@ -20,10 +20,43 @@ export default function ContactSection() {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleSubmit = useCallback((e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormSubmitted(true);
-  }, []);
+    setIsSubmitting(true);
+    setSubmitError('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'メール送信に失敗しました');
+      }
+
+      setFormSubmitted(true);
+      // フォームデータをリセット
+      setFormData({
+        name: '',
+        email: '',
+        company: '',
+        message: ''
+      });
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'エラーが発生しました');
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [formData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -179,7 +212,7 @@ export default function ContactSection() {
                     name="company"
                     value={formData.company}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-gray-900"
                     placeholder="株式会社〇〇"
                   />
                 </div>
@@ -200,11 +233,22 @@ export default function ContactSection() {
                   />
                 </div>
 
+                {submitError && (
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">
+                    {submitError}
+                  </div>
+                )}
+                
                 <button
                   type="submit"
-                  className="w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-xl hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
+                  disabled={isSubmitting}
+                  className={`w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-xl transition-all duration-300 ${
+                    isSubmitting 
+                      ? 'opacity-50 cursor-not-allowed' 
+                      : 'hover:shadow-xl hover:scale-[1.02]'
+                  }`}
                 >
-                  送信する
+                  {isSubmitting ? '送信中...' : '送信する'}
                 </button>
               </form>
             </div>
