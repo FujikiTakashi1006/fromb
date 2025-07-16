@@ -1,46 +1,102 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function Navigation() {
-  const pathname = usePathname();
+  const [activeSection, setActiveSection] = useState('home');
+  const [scrolled, setScrolled] = useState(false);
 
   const navItems = [
-    { href: '/', label: 'HOME' },
-    { href: '/works', label: 'WORKS' },
-    { href: '/contact', label: 'CONTACT' },
+    { id: 'home', label: 'ホーム' },
+    { id: 'works', label: '作品' },
+    { id: 'contact', label: 'お問い合わせ' },
   ];
 
-  const isActive = (href: string) => {
-    if (href === '/') {
-      return pathname === '/';
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
     }
-    return pathname.startsWith(href);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setScrolled(scrollPosition > 50);
+
+      const sections = navItems.map(item => item.id);
+      let currentSection = 'home';
+
+      for (const sectionId of sections) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            currentSection = sectionId;
+            break;
+          }
+        }
+      }
+
+      setActiveSection(currentSection);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const isActive = (id: string) => activeSection === id;
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-md animate-fadeIn">
-      <div className="flex justify-end items-center px-8 text-white py-7">
-        <div className="flex space-x-8">
-          {navItems.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className={`relative group overflow-hidden py-2 cursor-pointer ${
-                isActive(href) ? 'text-red-300' : ''
-              }`}
-            >
-              <span className="relative z-10 transition-colors duration-300 group-hover:text-red-300 font-light tracking-widest text-base">
-                {label}
-              </span>
-              <span 
-                className={`absolute bottom-0 left-0 w-full h-0.5 bg-red-400 transform origin-left transition-transform duration-300 ${
-                  isActive(href) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      scrolled ? 'bg-white/90 backdrop-blur-md shadow-lg' : 'bg-transparent'
+    }`}>
+      <div className="max-w-6xl mx-auto px-6 py-4">
+        <div className="flex justify-between items-center">
+          {/* Logo */}
+          <div className="flex items-center">
+            <span className={`text-2xl font-bold transition-colors duration-300 ${
+              scrolled ? 'text-gray-900' : 'text-gray-900'
+            }`}>
+              fromB
+            </span>
+          </div>
+          
+          {/* Navigation Items */}
+          <div className="hidden md:flex space-x-8">
+            {navItems.map(({ id, label }) => (
+              <button
+                key={id}
+                onClick={() => scrollToSection(id)}
+                className={`relative py-2 px-4 rounded-full transition-all duration-300 ${
+                  isActive(id) 
+                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white' 
+                    : scrolled 
+                      ? 'text-gray-700 hover:text-blue-600' 
+                      : 'text-gray-900 hover:text-blue-600'
                 }`}
-              ></span>
-            </Link>
-          ))}
+              >
+                <span className="font-medium text-sm">
+                  {label}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button className={`p-2 rounded-lg transition-colors duration-300 ${
+              scrolled ? 'text-gray-700' : 'text-gray-900'
+            }`}>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </nav>

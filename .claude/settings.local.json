@@ -6,7 +6,8 @@
       "Bash(npm run build:*)",
       "Bash(npm run dev:*)",
       "Bash(pkill:*)",
-      "WebFetch(domain:potg.art)"
+      "WebFetch(domain:potg.art)",
+      "WebFetch(domain:smile-days.jp)"
     ],
     "deny": []
   }
