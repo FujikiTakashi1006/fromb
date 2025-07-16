@@ -6,6 +6,7 @@ import Image from 'next/image';
 export default function Navigation() {
   const [activeSection, setActiveSection] = useState('home');
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
     { id: 'home', label: 'ホーム' },
@@ -107,13 +108,52 @@ export default function Navigation() {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
-            <button className={`p-2 rounded-lg transition-colors duration-300 ${
-              scrolled ? 'text-gray-700' : 'text-white'
-            }`}>
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Mobile menu clicked, current state:', mobileMenuOpen);
+                setMobileMenuOpen(!mobileMenuOpen);
+              }}
+              className={`p-2 rounded-lg transition-colors duration-300 ${
+                scrolled ? 'text-gray-700' : 'text-white'
+              }`}
+              style={{ pointerEvents: 'auto' }}
+            >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={mobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
               </svg>
             </button>
+          </div>
+        </div>
+      </div>
+      
+      {/* Mobile Menu */}
+      <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+        mobileMenuOpen ? 'max-h-60 opacity-100' : 'max-h-0 opacity-0'
+      }`}>
+        <div className={`backdrop-blur-sm ${
+          scrolled ? 'bg-white/90' : 'bg-white/10'
+        }`}>
+          <div className="px-6 py-6 space-y-4">
+            {navItems.map(({ id, label }) => (
+              <button
+                key={id}
+                onClick={() => {
+                  scrollToSection(id);
+                  setMobileMenuOpen(false);
+                }}
+                className={`block w-full text-left py-3 px-4 rounded-xl transition-all duration-300 ${
+                  isActive(id) 
+                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white scale-105' 
+                    : scrolled 
+                      ? 'text-gray-700 hover:bg-gray-100 hover:scale-105'
+                      : 'text-white/90 hover:bg-white/10 hover:text-white hover:scale-105'
+                }`}
+              >
+                <span className="font-medium">{label}</span>
+              </button>
+            ))}
           </div>
         </div>
       </div>

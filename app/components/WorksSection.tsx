@@ -70,10 +70,10 @@ export default function WorksSection() {
 
 
   return (
-    <div className="bg-gradient-to-br from-purple-300 via-blue-300 to-indigo-400 py-16 border-b-0">
-      <div className="max-w-7xl mx-auto px-6">
+    <div className="bg-gradient-to-br from-purple-300 via-blue-300 to-indigo-400 py-16 border-b-0 min-h-screen flex flex-col">
+      <div className="max-w-7xl mx-auto px-6 flex-1 flex flex-col justify-center">
         {/* Main Slideshow */}
-        <div className={`mb-24 transition-all duration-1000 delay-300 ${
+        <div className={`mb-16 transition-all duration-1000 delay-300 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
           <div className="relative">
@@ -86,7 +86,7 @@ export default function WorksSection() {
                 <p className="text-white/80 text-base sm:text-lg mt-4 max-w-xs mx-auto lg:mx-0">
                   私たちが手がけた様々なジャンルの映像作品
                 </p>
-                <div className="mt-6">
+                <div className="mt-6 relative">
                   <button 
                     onClick={() => setShowNotice(!showNotice)}
                     className="text-white/60 text-sm hover:text-white/80 transition-colors duration-300 flex items-center gap-2 mx-auto lg:mx-0"
@@ -96,10 +96,10 @@ export default function WorksSection() {
                       ▶
                     </span>
                   </button>
-                  <div className={`overflow-hidden transition-all duration-300 absolute z-10 ${
+                  <div className={`overflow-hidden transition-all duration-300 absolute z-20 top-8 left-0 bg-black/80 backdrop-blur-sm p-3 rounded-lg ${
                     showNotice ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'
                   }`}>
-                    <p className="text-white/60 text-sm mt-2 max-w-xs mx-auto lg:mx-0">
+                    <p className="text-white/90 text-sm max-w-xs">
                       当Webサイトに掲載されている作品について、水﨑一輝の作例紹介を目的としております。<br />
                       ご不都合があればメールにてご連絡いただきますと幸いです。
                     </p>
