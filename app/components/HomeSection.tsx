@@ -40,14 +40,13 @@ export default function HomeSection() {
           isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
           <h1 className="text-5xl md:text-8xl font-bold text-white mb-8 leading-tight">
-            映像が<br />
             <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              世界を変える
+              A Message<br />Beyond Words
             </span>
           </h1>
           
           <p className="text-xl md:text-2xl text-white/90 font-light tracking-wide mb-12 max-w-3xl mx-auto">
-            独自の視点で映像制作を行うクリエイティブチーム fromB のポートフォリオサイト
+            言葉以上のメッセージを
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">

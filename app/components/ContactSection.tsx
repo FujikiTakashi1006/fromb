@@ -62,8 +62,6 @@ export default function ContactSection() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-100 to-gray-200 py-20 relative">
-      {/* Top border accent */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}
         <div className={`text-center mb-16 transition-all duration-1000 ${

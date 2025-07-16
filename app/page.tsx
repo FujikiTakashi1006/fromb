@@ -1,6 +1,7 @@
 import HomeSection from './components/HomeSection';
 import WorksSection from './components/WorksSection';
 import ContactSection from './components/ContactSection';
+import Footer from './components/Footer';
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <section id="contact" className="min-h-screen">
         <ContactSection />
       </section>
+      <Footer />
     </div>
   );
 }
