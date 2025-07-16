@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
     // メールオプションの設定
     const mailOptions = {
       from: process.env.NODEMAILER_EMAIL,
-      to: 'fujit4653@gmail.com', // 受信先メールアドレス
+      to: 'mktr087@gmail.com', // 受信先メールアドレス
       subject: `【お問い合わせ】${name}様より`,
       html: `
         <h3>新しいお問い合わせがあります</h3>
