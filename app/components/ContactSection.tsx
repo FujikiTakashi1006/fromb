@@ -61,17 +61,16 @@ export default function ContactSection() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-gray-200 py-20 relative">
+      {/* Top border accent */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}
         <div className={`text-center mb-16 transition-all duration-1000 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
-          <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            お問い合わせ
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent ml-4">
-              Contact
-            </span>
+          <h2 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            Contact
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             映像制作に関するご相談、お見積り、その他ご質問など、

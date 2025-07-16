@@ -5,7 +5,8 @@ import Image from 'next/image';
 
 export default function WorksSection() {
   const [isVisible, setIsVisible] = useState(false);
-  const [selectedWork, setSelectedWork] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [cardOffset, setCardOffset] = useState(0);
 
   const works = useMemo(() => [
     {
@@ -49,11 +50,11 @@ export default function WorksSection() {
       year: '2023'
     },
     {
-      id: 'placeholder1',
-      title: 'Music Video',
-      category: 'Music',
-      description: 'アーティストの世界観を映像で表現したミュージックビデオ。音楽と映像の完璧な融合。',
-      url: '#',
+      id: 'iuhFpC_Hd7s',
+      title: 'Corporate Video',
+      category: 'Corporate',
+      description: '企業の理念と価値観を映像で表現した感動的なブランドストーリー。',
+      url: 'https://youtu.be/iuhFpC_Hd7s?si=pj7zrabZcEEM-O8d',
       year: '2024'
     }
   ], []);
@@ -66,98 +67,198 @@ export default function WorksSection() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Auto slide for slideshow every 4 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % works.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [works.length]);
+
+  // Continuous card sliding
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCardOffset((prev) => prev + 1);
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gray-50 py-20">
+    <div className="bg-gradient-to-br from-purple-300 via-blue-300 to-indigo-400 py-16">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Section Header */}
-        <div className={`text-center mb-16 transition-all duration-1000 ${
+        {/* Main Slideshow */}
+        <div className={`mb-24 transition-all duration-1000 delay-300 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
-          <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            作品
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent ml-4">
-              Portfolio
-            </span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            私たちが手がけた様々なジャンルの映像作品をご覧ください。
-            ブランドムービーからアート作品まで、幅広い表現を追求しています。
-          </p>
+          <div className="relative max-w-6xl mx-auto">
+            {/* Title Section */}
+            <div className="text-center mb-16">
+              <h2 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Portfolio
+              </h2>
+            </div>
+            
+            {/* Slideshow Section */}
+            <div className="relative max-w-4xl mx-auto">
+              <div className="relative">
+                {works.map((work, index) => (
+                  <div
+                    key={`slide-${index}`}
+                    className={`transition-all duration-1000 ease-in-out ${
+                      index === currentSlide ? 'opacity-100' : 'opacity-0 absolute inset-0'
+                    }`}
+                  >
+                    <div className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer group"
+                         onClick={() => window.open(work.url, '_blank')}>
+                      {/* Image with padding */}
+                      <div className="p-3">
+                        <div className="relative h-48 rounded-2xl overflow-hidden">
+                          <Image
+                            src={`https://img.youtube.com/vi/${work.id}/maxresdefault.jpg`}
+                            alt={work.title}
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-700"
+                          />
+                          
+                          {/* Hover Play Button */}
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 flex items-center justify-center">
+                            <div className="w-16 h-16 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100">
+                              <svg className="w-8 h-8 text-gray-800 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z"/>
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Content */}
+                      <div className="p-6">
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="inline-block px-3 py-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-600 text-xs font-medium rounded-full">
+                            {work.category}
+                          </span>
+                          <span className="text-xs text-gray-500">{work.year}</span>
+                        </div>
+                        
+                        <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
+                          {work.title}
+                        </h3>
+                        
+                        <p className="text-gray-600 text-sm leading-relaxed mb-3 line-clamp-2">
+                          {work.description}
+                        </p>
+                        
+                        {/* View More Link */}
+                        <div className="flex items-center text-blue-600 text-sm font-medium group-hover:text-blue-700 transition-colors duration-300">
+                          <span>詳細を見る</span>
+                          <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Slide Indicators */}
+              <div className="flex justify-center space-x-3 mt-8">
+                {works.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentSlide(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      index === currentSlide 
+                        ? 'bg-white scale-125' 
+                        : 'bg-white/50 hover:bg-white/70'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Works Grid */}
-        <div className={`transition-all duration-1000 delay-300 ${
+        {/* Scrolling Cards */}
+        <div className={`transition-all duration-1000 delay-500 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {works.map((work, index) => (
-              <div
-                key={work.id}
-                className="group cursor-pointer"
-                onClick={() => setSelectedWork(index)}
-              >
-                <div className="relative aspect-video rounded-2xl overflow-hidden bg-gray-200 shadow-lg group-hover:shadow-2xl transition-all duration-500">
-                  {work.id !== 'placeholder1' ? (
-                    <Image
-                      src={`https://img.youtube.com/vi/${work.id}/maxresdefault.jpg`}
-                      alt={work.title}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center">
-                      <span className="text-gray-600 text-lg">Coming Soon</span>
+          <div className="overflow-hidden">
+            <div 
+              className="flex space-x-6"
+              style={{ 
+                transform: `translateX(-${cardOffset}px)`,
+                width: `${works.length * 3 * 280}px`
+              }}
+            >
+              {[...works, ...works, ...works].map((work, index) => (
+                <div
+                  key={`card-${index}`}
+                  className="flex-shrink-0 w-64 group cursor-pointer"
+                  onClick={() => window.open(work.url, '_blank')}
+                >
+                  <div className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+                    {/* Image with padding */}
+                    <div className="p-4">
+                      <div className="relative h-40 rounded-2xl overflow-hidden">
+                        <Image
+                          src={`https://img.youtube.com/vi/${work.id}/maxresdefault.jpg`}
+                          alt={work.title}
+                          fill
+                          className="object-cover group-hover:scale-110 transition-transform duration-700"
+                        />
+                        
+                        {/* Hover Play Button */}
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                          <div className="w-14 h-14 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100">
+                            <svg className="w-6 h-6 text-gray-800 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M8 5v14l11-7z"/>
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  )}
-                  
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute bottom-6 left-6 right-6">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="inline-block px-3 py-1 bg-white/20 text-white text-xs rounded-full backdrop-blur-sm">
+
+                    <div className="p-6">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="inline-block px-3 py-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-600 text-xs font-medium rounded-full">
                           {work.category}
                         </span>
-                        <span className="text-white/80 text-sm">{work.year}</span>
+                        <span className="text-xs text-gray-500">{work.year}</span>
                       </div>
-                      <h3 className="text-white text-xl font-bold mb-2">{work.title}</h3>
-                      <p className="text-white/90 text-sm line-clamp-2">{work.description}</p>
-                    </div>
-                  </div>
-
-                  {/* Play Button */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                      <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z"/>
-                      </svg>
+                      
+                      <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
+                        {work.title}
+                      </h3>
+                      
+                      <p className="text-gray-600 text-sm leading-relaxed line-clamp-2">
+                        {work.description}
+                      </p>
+                      
+                      {/* View More Link */}
+                      <div className="flex items-center text-blue-600 text-sm font-medium mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>詳細を見る</span>
+                        <svg className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
                 </div>
-
-                {/* Work Info */}
-                <div className="mt-6">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-blue-600 font-medium">{work.category}</span>
-                    <span className="text-sm text-gray-500">{work.year}</span>
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{work.title}</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">{work.description}</p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Call to Action */}
-        <div className={`text-center mt-20 transition-all duration-1000 delay-500 ${
+        <div className={`text-center mt-20 transition-all duration-1000 delay-700 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
-          <p className="text-lg text-gray-600 mb-8">
-            あなたのプロジェクトも一緒に作りませんか？
-          </p>
           <button 
             onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-medium hover:shadow-xl hover:scale-105 transition-all duration-300"
+            className="px-8 py-4 bg-white text-blue-600 rounded-full font-medium hover:bg-gray-100 hover:scale-105 transition-all duration-300"
           >
             お問い合わせする
           </button>

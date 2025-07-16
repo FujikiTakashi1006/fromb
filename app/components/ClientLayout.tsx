@@ -11,10 +11,10 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
   const [showNavigation, setShowNavigation] = useState(false);
 
   useEffect(() => {
-    // Show navigation immediately for the new modern design
+    // Show navigation at the same time as the home text (4 seconds)
     const timer = setTimeout(() => {
       setShowNavigation(true);
-    }, 500);
+    }, 4000);
     
     return () => clearTimeout(timer);
   }, []);
