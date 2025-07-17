@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
 import ClientLayout from "./components/ClientLayout";
+import "./globals.css";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -15,20 +15,25 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "fromB - 映像が世界を変える",
-  description: "独自の視点で映像制作を行うクリエイティブチーム fromB のポートフォリオサイト。光と影の対比が印象的な映像詩から前衛的作品まで、心に響く映像体験をお届けします。",
-  keywords: ["映像制作", "動画", "クリエイティブ", "ポートフォリオ", "fromB"],
+  title: "fromB - A Message Beyond Words",
+  description: "水崎一耀のポートフォリオサイト",
+  keywords: ["映像制作", "動画", "クリエイティブ", "ポートフォリオ", "fromB", "message beyond words"],
   authors: [{ name: "fromB" }],
+  icons: {
+    icon: "/logo-only.png",
+    shortcut: "/logo-only.png",
+    apple: "/logo-only.png",
+  },
   openGraph: {
-    title: "fromB - 映像が世界を変える",
-    description: "独自の視点で映像制作を行うクリエイティブチーム fromB のポートフォリオサイト",
+    title: "fromB - A Message Beyond Words",
+    description: "言葉以上のメッセージを。独自の視点で映像制作を行うクリエイティブチーム fromB のポートフォリオサイト",
     type: "website",
     locale: "ja_JP",
   },
   twitter: {
     card: "summary_large_image",
-    title: "fromB - 映像が世界を変える",
-    description: "独自の視点で映像制作を行うクリエイティブチーム fromB のポートフォリオサイト",
+    title: "fromB - A Message Beyond Words",
+    description: "言葉以上のメッセージを。独自の視点で映像制作を行うクリエイティブチーム fromB のポートフォリオサイト",
   },
   robots: {
     index: true,
