@@ -113,7 +113,7 @@ export default function ContactSection() {
     <div className="min-h-screen bg-gradient-to-br from-slate-100 to-gray-200 py-20 relative">
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}
-        <div className={`text-center mb-16 transition-all duration-1000 ${
+        <div className={`text-center mb-8 md:mb-16 transition-all duration-1000 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
           <h2 className={`text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent transition-all duration-1000 ${
@@ -121,7 +121,7 @@ export default function ContactSection() {
           }`}>
             Contact
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-base md:text-xl text-gray-600 max-w-3xl mx-auto">
             映像制作に関するご相談、お見積り、その他ご質問など<br />
             お気軽にお問い合わせください。
           </p>
@@ -130,10 +130,10 @@ export default function ContactSection() {
         <div className={`transition-all duration-1000 delay-300 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
             {/* Contact Info */}
             <div className="space-y-8">
-              <div>
+              <div className="hidden lg:block">
                 <h3 className="text-2xl font-bold text-gray-900 mb-6">
                   まずはお気軽にご相談ください
                 </h3>
@@ -145,7 +145,7 @@ export default function ContactSection() {
               </div>
 
               <div className="space-y-6">
-                <div className="flex items-center space-x-4">
+                <div className="hidden lg:flex items-center space-x-4">
                   <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -157,7 +157,7 @@ export default function ContactSection() {
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-4">
+                <div className="hidden lg:flex items-center space-x-4">
                   <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -169,7 +169,7 @@ export default function ContactSection() {
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-4">
+                <div className="hidden lg:flex items-center space-x-4">
                   <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
