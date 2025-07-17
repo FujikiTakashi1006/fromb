@@ -65,7 +65,7 @@ export default function HomeSection() {
             </span>
           </h1>
           
-          <p className="text-lg md:text-xl text-gray-300 font-thin tracking-[0.3em] mb-12 max-w-3xl mx-auto">
+          <p className="text-sm md:text-xl text-gray-300 font-thin tracking-[0.3em] mb-12 max-w-3xl mx-auto">
             言葉以上のメッセージを
           </p>
         </div>
