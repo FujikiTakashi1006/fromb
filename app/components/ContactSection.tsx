@@ -169,16 +169,32 @@ export default function ContactSection() {
                   </div>
                 </div>
 
-                <div className="hidden lg:flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                <div className="hidden lg:flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">所在地</h4>
-                    <p className="text-gray-600">東京都渋谷区</p>
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-gray-900 mb-3">所在地</h4>
+                    <div className="space-y-4 text-gray-600">
+                      <div>
+                        <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full mb-2">福岡オフィス</span>
+                        <p className="text-sm">
+                          〒810-0001<br />
+                          福岡県福岡市中央区天神４丁目４−２６<br />
+                          天神吉柳ビル 7F
+                        </p>
+                      </div>
+                      <div>
+                        <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full mb-2">東京オフィス</span>
+                        <p className="text-sm">
+                          〒106-0044<br />
+                          東京都港区東麻布２丁目２２−７
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
