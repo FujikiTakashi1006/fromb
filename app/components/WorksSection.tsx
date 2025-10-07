@@ -89,7 +89,7 @@ export default function WorksSection() {
     <div className="py-16 sm:py-20 pb-32">
       <div className="max-w-7xl mx-auto px-6">
         {/* Main Slideshow */}
-        <div className={`mb-4 transition-all duration-1000 delay-300 ${
+        <div className={`transition-all duration-1000 delay-300 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
           <div className="relative">
@@ -191,7 +191,7 @@ export default function WorksSection() {
       </div>
       
       {/* Scrolling Cards - Full Width */}
-      <div className={`transition-all duration-1000 delay-500 ${
+      <div className={`-mt-16 transition-all duration-1000 delay-500 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`}>
         <div className="overflow-hidden py-4">
