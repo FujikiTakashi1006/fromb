@@ -10,6 +10,7 @@ export default function Navigation() {
 
   const navItems = [
     { id: 'home', label: 'ホーム' },
+    { id: 'work', label: '実績' },
     { id: 'works', label: '作品' },
     { id: 'contact', label: 'お問い合わせ' },
   ];

@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
 import Image from 'next/image';
+import { useEffect, useMemo, useState } from 'react';
 
 export default function WorksSection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -86,30 +86,30 @@ export default function WorksSection() {
 
 
   return (
-    <div className="bg-gradient-to-br from-purple-300 via-blue-300 to-indigo-400 py-8 border-b-0 min-h-screen flex flex-col">
-      <div className="max-w-7xl mx-auto px-6 flex-1 flex flex-col justify-center">
+    <div className="py-16 sm:py-20 pb-32">
+      <div className="max-w-7xl mx-auto px-6">
         {/* Main Slideshow */}
-        <div className={`mb-8 transition-all duration-1000 delay-300 ${
+        <div className={`mb-4 transition-all duration-1000 delay-300 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
           <div className="relative">
             <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 justify-center">
               {/* Title Section */}
-              <div className="flex-shrink-0 text-center lg:text-left">
-                <h2 className={`text-4xl sm:text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent transition-all duration-1000 ${
+              <div className="flex-shrink-0 text-center">
+                <h2 className={`text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent transition-all duration-1000 ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}>
                   Portfolio
                 </h2>
-                <p className="text-white/80 text-base sm:text-lg mt-2 max-w-xs mx-auto lg:mx-0">
+                <p className="text-white/80 text-base md:text-xl max-w-3xl mx-auto">
                   私たちが手がけた様々なジャンルの映像作品
                 </p>
                 <div className="mt-3 relative">
-                  <button 
+                  <button
                     onClick={() => setShowNotice(!showNotice)}
-                    className="text-white/60 text-sm hover:text-white/80 transition-colors duration-300 flex items-center gap-2 mx-auto lg:mx-0"
+                    className="text-white/60 text-sm hover:text-white/80 transition-colors duration-300 flex items-center gap-2 mx-auto"
                   >
-                    ※ 関係者各位 
+                    ※ 関係者各位
                     <span className={`transition-transform duration-300 ${showNotice ? 'rotate-90' : ''}`}>
                       ▶
                     </span>
@@ -126,8 +126,8 @@ export default function WorksSection() {
               </div>
               
               {/* Slideshow Section */}
-              <div className="relative w-full max-w-sm sm:max-w-md lg:w-[420px]">
-              <div className="relative h-72 sm:h-80 lg:h-[350px] overflow-hidden perspective-1000">
+              <div className="relative w-full max-w-md sm:max-w-lg lg:w-[600px]">
+              <div className="relative h-[420px] sm:h-[480px] lg:h-[520px] overflow-hidden perspective-1000">
                 {works.map((work, index) => (
                   <div
                     key={`slide-${index}`}
@@ -143,18 +143,18 @@ export default function WorksSection() {
                         : 'translateZ(-100px) scale(0.95)'
                     }}
                   >
-                    <div className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer group h-full"
+                    <div className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer group"
                          onClick={() => window.open(work.url, '_blank')}>
                       {/* Image with padding */}
-                      <div className="p-4">
-                        <div className="relative h-40 sm:h-44 lg:h-48 rounded-2xl overflow-hidden">
+                      <div className="sm:p-4">
+                        <div className="relative h-52 sm:h-60 lg:h-72 rounded-2xl overflow-hidden">
                           <Image
                             src={`https://img.youtube.com/vi/${work.id}/maxresdefault.jpg`}
                             alt={work.title}
                             fill
                             className="object-cover group-hover:scale-105 transition-transform duration-700"
                           />
-                          
+
                           {/* Hover Play Button */}
                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 flex items-center justify-center">
                             <div className="w-14 h-14 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100">
@@ -167,15 +167,15 @@ export default function WorksSection() {
                       </div>
 
                       {/* Content */}
-                      <div className="p-4">
+                      <div className="px-3 sm:px-4 pb-3 sm:pb-4">
                         <div className="flex items-center justify-between mb-2">
-                          <span className="inline-block px-3 py-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-600 text-xs font-medium rounded-full">
+                          <span className="inline-block px-3 py-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-600 text-sm font-medium rounded-full">
                             {work.category}
                           </span>
-                          <span className="text-xs text-gray-500">{work.year}</span>
+                          <span className="text-sm text-gray-500">{work.year}</span>
                         </div>
-                        
-                        <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+
+                        <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
                           {work.title}
                         </h3>
                       </div>
@@ -222,7 +222,7 @@ export default function WorksSection() {
                         fill
                         className="object-cover group-hover:scale-110 transition-transform duration-700"
                       />
-                      
+
                       {/* Hover Overlay */}
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300"></div>
                     </div>
