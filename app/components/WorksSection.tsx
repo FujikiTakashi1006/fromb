@@ -79,7 +79,7 @@ export default function WorksSection() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % works.length);
-    }, 4000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [works.length, currentSlide]);
@@ -124,23 +124,20 @@ export default function WorksSection() {
                   </div>
                 </div>
               </div>
-              
+
               {/* Slideshow Section */}
               <div className="relative w-full max-w-md sm:max-w-lg lg:w-[600px]">
-              <div className="relative h-[420px] sm:h-[480px] lg:h-[520px] overflow-hidden perspective-1000">
+              <div className="relative h-[420px] sm:h-[480px] lg:h-[520px] overflow-hidden">
                 {works.map((work, index) => (
                   <div
                     key={`slide-${index}`}
-                    className={`absolute inset-0 transition-all duration-700 ease-in-out ${
-                      index === currentSlide 
-                        ? 'opacity-100 translate-z-0 scale-100' 
-                        : 'opacity-60 translate-z-[-100px] scale-95'
+                    className={`absolute inset-0 transition-opacity duration-500 ease-out ${
+                      index === currentSlide
+                        ? 'opacity-100'
+                        : 'opacity-0 pointer-events-none'
                     }`}
                     style={{
-                      zIndex: index === currentSlide ? 10 : 1,
-                      transform: index === currentSlide 
-                        ? 'translateZ(0) scale(1)' 
-                        : 'translateZ(-100px) scale(0.95)'
+                      zIndex: index === currentSlide ? 10 : 1
                     }}
                   >
                     <div className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer group"
@@ -189,30 +186,32 @@ export default function WorksSection() {
           </div>
         </div>
       </div>
-      
+
       {/* Scrolling Cards - Full Width */}
       <div className={`-mt-16 transition-all duration-1000 delay-500 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`}>
         <div className="overflow-hidden py-4">
-          <div 
-            className="flex space-x-6 transition-transform duration-1000 ease-in-out"
-            style={{ 
-              transform: `translateX(-${currentSlide * 220}px)`,
-              width: `${works.length * 3 * 220}px`
+          <div
+            className="flex space-x-6 animate-scroll"
+            style={{
+              width: `${works.length * 2 * 280}px`
             }}
           >
-            {[...works, ...works, ...works].map((work, index) => (
+            {[...works, ...works].map((work, index) => {
+              const workIndex = index % works.length;
+              return (
               <div
                 key={`card-${index}`}
                 className="flex-shrink-0 w-48 sm:w-64 group cursor-pointer"
-                onClick={() => setCurrentSlide(index % works.length)}
+                onClick={() => setCurrentSlide(workIndex)}
               >
-                <div className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
-                     style={{
-                       transform: `rotate(${(index % 3 - 1) * 3}deg)`,
-                       transformOrigin: 'center center'
-                     }}>
+                <div
+                  className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
+                  style={{
+                    transform: `rotate(${(workIndex % 3 - 1) * 3}deg)`
+                  }}
+                >
                   {/* Image with padding */}
                   <div className="p-4">
                     <div className="relative h-32 sm:h-40 rounded-2xl overflow-hidden">
@@ -235,15 +234,16 @@ export default function WorksSection() {
                       </span>
                       <span className="text-xs text-gray-500">{work.year}</span>
                     </div>
-                    
+
                     <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
                       {work.title}
                     </h3>
-                    
+
                   </div>
                 </div>
               </div>
-            ))}
+            );
+            })}
           </div>
         </div>
       </div>
